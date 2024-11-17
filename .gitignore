@@ -4,4 +4,5 @@
 # /logs/       # logsフォルダ全体
 # *.log        # 拡張子が .log のファイル全て
 
-calibration_data.txt
+#calibration_data.txt
+#/data/

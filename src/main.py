@@ -1,14 +1,12 @@
-import sys
-import os
-
-# srcディレクトリをモジュール検索パスに追加
-sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
-
-from sensors.gas_sensor import calculate_resistance
 from sensors.temperature import read_temperature
 from sensors.soil_moisture import read_adc, soil_moisture_percentage
+from sensors.gas_sensor import calculate_resistance
 from utils.logger import log_data
-from utils.config import SOIL_MOISTURE_CHANNEL, MQ135_CHANNEL, LOG_FILE
+from utils.config import SOIL_MOISTURE_CHANNEL, MQ135_CHANNEL
+from pathlib import Path
+
+# ログファイルのパス
+LOG_FILE = Path("data/sensor_data.csv")
 
 def main():
     try:
