@@ -26,9 +26,14 @@ def visualize_data(file_path):
 
         # プロット
         plt.figure(figsize=(10, 8))
+        # グラフの修正版
         data[['Temperature (°C)', 'Soil Moisture (%)', 'Gas Resistance (kΩ)']].plot(
-            subplots=True, figsize=(10, 8), title="Sensor Data Over Time"
-        )
+            subplots=True,
+            figsize=(10, 8),
+            title="Sensor Data Over Time",
+            xlabel="Timestamp",
+            ylabel="Values"
+)
 
         # 画像保存用ディレクトリを作成
         output_dir = Path("output")
