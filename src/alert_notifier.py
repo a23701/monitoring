@@ -6,7 +6,7 @@ from email.mime.multipart import MIMEMultipart
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 SENDER_EMAIL = "compostmonitoring@gmail.com"  # 自分のメールアドレス
-SENDER_PASSWORD = "abeLAB@2022"  # アプリパスワード
+SENDER_PASSWORD = "btfzjuybtsmmvkxk"  # アプリパスワード
 RECIPIENT_EMAIL = "a23701@g.ichinoseki.ac.jp"  # 送信先のメールアドレス
 
 def send_alert(subject, message):
@@ -34,3 +34,13 @@ def send_alert(subject, message):
 
     except Exception as e:
         print(f"メール送信中にエラーが発生しました: {e}")
+
+"""
+# テスト用コード
+if __name__ == "__main__":
+    print("メール送信テストを開始します...")
+    send_alert(
+        "テストメール: コンポスト監視システム",
+        "これはテストメールです。システムは正常に動作しています。"
+    )
+"""
