@@ -13,9 +13,12 @@ def visualize_data(file_path):
         data = pd.read_csv(file_path)
 
         # データの確認
-        if data.empty:
-            print("データがありません。CSVファイルを確認してください。")
+        if data.empty or len(data) < 2:
+            print("データが不足しています。少なくとも2件以上のデータが必要です。")
             return
+
+        print("CSVデータを正常に読み込みました:")
+        print(data.head())  # CSVの先頭データを表示
 
         # タイムスタンプを日時型に変換
         data['Timestamp'] = pd.to_datetime(data['Timestamp'])
@@ -39,3 +42,11 @@ def visualize_data(file_path):
 
     except Exception as e:
         print(f"エラーが発生しました: {e}")
+
+if __name__ == "__main__":
+    # ファイルパスを指定
+    csv_file_path = Path("data/sensor_data.csv")
+    if not csv_file_path.exists():
+        print(f"CSVファイルが見つかりません: {csv_file_path}")
+    else:
+        visualize_data(csv_file_path)
