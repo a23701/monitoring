@@ -1,0 +1,7 @@
+
+# プッシュしないファイルやフォルダ
+# secrets.txt(特定のファイル)
+# /logs/       # logsフォルダ全体
+# *.log        # 拡張子が .log のファイル全て
+
+calibration_data.txt
