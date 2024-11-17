@@ -5,7 +5,7 @@ from sensors.gas_sensor import calculate_resistance
 from pathlib import Path
 
 # CSVファイルの保存場所
-LOG_FILE = Path("data/sensor_data.csv")
+LOG_FILE = Path("/home/kon/monitoring/data/sensor_data.csv")
 
 def main():
     try:
