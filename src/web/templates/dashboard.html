@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンポストダッシュボード</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>コンポストダッシュボード</h1>
+    <h2>センサー値のリアルタイム表示</h2>
+
+    <div>
+        <canvas id="temperatureChart"></canvas>
+        <canvas id="soilMoistureChart"></canvas>
+        <canvas id="gasResistanceChart"></canvas>
+    </div>
+
+    <script>
+        const timestamps = {{ timestamps | safe }};
+        const temperature = {{ temperature | safe }};
+        const soilMoisture = {{ soil_moisture | safe }};
+        const gasResistance = {{ gas_resistance | safe }};
+
+        // 温度グラフ
+        new Chart(document.getElementById("temperatureChart"), {
+            type: "line",
+            data: {
+                labels: timestamps,
+                datasets: [{
+                    label: "温度 (°C)",
+                    data: temperature,
+                    borderColor: "red",
+                    fill: false
+                }]
+            }
+        });
+
+        // 土壌水分グラフ
+        new Chart(document.getElementById("soilMoistureChart"), {
+            type: "line",
+            data: {
+                labels: timestamps,
+                datasets: [{
+                    label: "土壌水分 (%)",
+                    data: soilMoisture,
+                    borderColor: "blue",
+                    fill: false
+                }]
+            }
+        });
+
+        // ガス抵抗グラフ
+        new Chart(document.getElementById("gasResistanceChart"), {
+            type: "line",
+            data: {
+                labels: timestamps,
+                datasets: [{
+                    label: "ガス抵抗 (kΩ)",
+                    data: gasResistance,
+                    borderColor: "green",
+                    fill: false
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
