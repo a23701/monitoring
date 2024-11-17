@@ -13,10 +13,22 @@ def read_channel(channel):
     data = ((adc[1] & 3) << 8) + adc[2]
     return data
 
-# ADC値を0〜100%のパーセンテージに変換する関数
 def convert_to_percentage(adc_value, min_value=0, max_value=1023):
+    """
+    ADC値を湿度のパーセンテージに変換する関数。
+    湿っている状態で100%、乾いている状態で0%となるよう反転。
+    Args:
+        adc_value: ADCから取得した値 (0〜1023)
+        min_value: ADC値の最小値（例: 0）
+        max_value: ADC値の最大値（例: 1023）
+    Returns:
+        湿度のパーセンテージ (0〜100%)
+    """
+    # 通常のスケーリング
     percentage = ((adc_value - min_value) / (max_value - min_value)) * 100
-    return max(0, min(percentage, 100))  # 範囲外を制限
+    # 反転処理
+    inverted_percentage = 100 - percentage
+    return max(0, min(inverted_percentage, 100))  # 範囲を0〜100%に制限
 
 try:
     while True:
@@ -35,4 +47,3 @@ try:
 except KeyboardInterrupt:
     spi.close()
     print("終了")
-
