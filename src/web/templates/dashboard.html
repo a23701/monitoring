@@ -3,66 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>コンポストダッシュボード</title>
+    <title>コンポスト ダッシュボード</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>コンポストダッシュボード</h1>
-    <h2>センサー値のリアルタイム表示</h2>
+    <h1>コンポスト ダッシュボード</h1>
+
+    <h2>現在のコンポスト状況: {{ compost_status }}</h2>
 
     <div>
-        <canvas id="temperatureChart"></canvas>
-        <canvas id="soilMoistureChart"></canvas>
-        <canvas id="gasResistanceChart"></canvas>
+        <h3>温度 (°C)</h3>
+        <canvas id="temperatureChart" width="400" height="200"></canvas>
+    </div>
+    <div>
+        <h3>土壌水分 (%)</h3>
+        <canvas id="soilMoistureChart" width="400" height="200"></canvas>
+    </div>
+    <div>
+        <h3>ガス抵抗 (kΩ)</h3>
+        <canvas id="gasResistanceChart" width="400" height="200"></canvas>
     </div>
 
+    <!-- Python データを JavaScript 変数に埋め込む -->
     <script>
-        const timestamps = {{ timestamps | safe }};
-        const temperature = {{ temperature | safe }};
-        const soilMoisture = {{ soil_moisture | safe }};
-        const gasResistance = {{ gas_resistance | safe }};
-
-        // 温度グラフ
-        new Chart(document.getElementById("temperatureChart"), {
-            type: "line",
-            data: {
-                labels: timestamps,
-                datasets: [{
-                    label: "温度 (°C)",
-                    data: temperature,
-                    borderColor: "red",
-                    fill: false
-                }]
-            }
-        });
-
-        // 土壌水分グラフ
-        new Chart(document.getElementById("soilMoistureChart"), {
-            type: "line",
-            data: {
-                labels: timestamps,
-                datasets: [{
-                    label: "土壌水分 (%)",
-                    data: soilMoisture,
-                    borderColor: "blue",
-                    fill: false
-                }]
-            }
-        });
-
-        // ガス抵抗グラフ
-        new Chart(document.getElementById("gasResistanceChart"), {
-            type: "line",
-            data: {
-                labels: timestamps,
-                datasets: [{
-                    label: "ガス抵抗 (kΩ)",
-                    data: gasResistance,
-                    borderColor: "green",
-                    fill: false
-                }]
-            }
-        });
+        const temperatureData = {{ temperature|tojson|safe }};
+        const soilMoistureData = {{ soil_moisture|tojson|safe }};
+        const gasResistanceData = {{ gas_resistance|tojson|safe }};
+        const timestamps = {{ timestamps|tojson|safe }};
     </script>
+
+    <!-- JavaScript ロジック -->
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
 </body>
 </html>
