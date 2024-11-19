@@ -5,34 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>コンポスト ダッシュボード</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>コンポスト ダッシュボード</h1>
-
     <h2>現在のコンポスト状況: {{ compost_status }}</h2>
 
-    <div>
-        <h3>温度 (°C)</h3>
-        <canvas id="temperatureChart" width="400" height="200"></canvas>
-    </div>
-    <div>
-        <h3>土壌水分 (%)</h3>
-        <canvas id="soilMoistureChart" width="400" height="200"></canvas>
-    </div>
-    <div>
-        <h3>ガス抵抗 (kΩ)</h3>
-        <canvas id="gasResistanceChart" width="400" height="200"></canvas>
+    <div class="container">
+        <div class="chart-container">
+            <h3>温度 (°C)</h3>
+            <canvas id="temperatureChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>土壌水分 (%)</h3>
+            <canvas id="soilMoistureChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>ガス抵抗 (kΩ)</h3>
+            <canvas id="gasResistanceChart"></canvas>
+        </div>
     </div>
 
-    <!-- Python データを JavaScript 変数に埋め込む -->
     <script>
         const temperatureData = {{ temperature|tojson|safe }};
         const soilMoistureData = {{ soil_moisture|tojson|safe }};
         const gasResistanceData = {{ gas_resistance|tojson|safe }};
         const timestamps = {{ timestamps|tojson|safe }};
     </script>
-
-    <!-- JavaScript ロジック -->
     <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
 </body>
 </html>
