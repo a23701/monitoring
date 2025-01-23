@@ -1,24 +1,21 @@
 import csv
-from pathlib import Path
+from datetime import datetime
 
-def log_data(file_path, temperature, soil_moisture, gas_resistance):
+def log_data(file_path, temperature, soil_moisture, gas_resistance, dht_temp, dht_humidity):
     """
-    センサー値をCSVファイルに記録する
+    CSVファイルにデータを記録
     Args:
-        file_path (Path): ログファイルのパス
+        file_path (Path): CSVファイルのパス
         temperature (float): 温度
         soil_moisture (float): 土壌水分
         gas_resistance (float): ガス抵抗
+        dht_temp (float): DHT11温度
+        dht_humidity (float): DHT11湿度
     """
-    # ファイルが存在しない場合、ヘッダー行を追加して新規作成
-    if not file_path.exists():
-        file_path.parent.mkdir(parents=True, exist_ok=True)  # ディレクトリが存在しない場合は作成
-        with open(file_path, mode='w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(["Timestamp", "Temperature (°C)", "Soil Moisture (%)", "Gas Resistance (kΩ)"])
-
-    # データを追記
+    file_exists = file_path.exists()
     with open(file_path, mode='a', newline='') as file:
         writer = csv.writer(file)
-        from datetime import datetime
-        writer.writerow([datetime.now().isoformat(), temperature, soil_moisture, gas_resistance])
+        if not file_exists:
+            # ヘッダーを書き込む
+            writer.writerow(["Timestamp", "Temperature (°C)", "Soil Moisture (%)", "Gas Resistance (kΩ)", "DHT Temperature (°C)", "DHT Humidity (%)"])
+        writer.writerow([datetime.now().isoformat(), temperature, soil_moisture, gas_resistance, dht_temp, dht_humidity])
